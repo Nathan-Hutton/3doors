@@ -6,45 +6,20 @@ int main()
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> distrib(0,2);
-
-    int guess;
-    int doorWithPrize;
     float correctWithSwitch = 0, correctNoSwitch = 0;
 
     for (int i = 0; i < 10000000; i++)
     {
-        doorWithPrize = distrib(gen);
-        guess = distrib(gen);
-
-        int doorToReveal;
-        for (int j = 0; j <= 2; j++)
-        {
-            if (j == guess || j == doorWithPrize)
-                continue;
-
-            doorToReveal = j;
-            break;
-        }
-
-        for (int j = 0; j <= 2; j++)
-        {
-            if (j == guess || j == doorToReveal)
-                continue;
-
-            guess = j;
-            break;
-        }
+        int doorWithPrize = distrib(gen);
+        int guess = distrib(gen);
 
         if (guess == doorWithPrize)
-            correctWithSwitch++;
-    }
-
-    for (int i = 0; i < 10000000; i++)
-    {
-        doorWithPrize = distrib(gen);
-        guess = distrib(gen);
-        if (guess == doorWithPrize)
+        {
             correctNoSwitch++;
+            continue;
+        }
+
+        correctWithSwitch++;
     }
 
     // Print amount of times we got it right
